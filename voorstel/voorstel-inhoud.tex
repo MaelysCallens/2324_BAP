@@ -3,37 +3,14 @@
 \section{Introductie}%
 \label{sec:introductie}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+Bepaalde bedrijven hebben nog steeds moeite met het ordenen van hun artikel master data. De master data gegevens worden geïdentificeerd als de kerngegevens van een organisatie. Ze bevatten gegevens over klanten, leveranciers, producten, enz. . Door het gebrek van de kwaliteit aan het bijhouden en het managen van deze gegevens hebben grote bedrijven hiee vaak moeilijkheden mee. Deze moeilijkheden kunnen vaak grote risico’s met zich meebrengen, zoals het betalen van hoge kosten om alles weer op punt te laten zetten. 
 
-\begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
-\end{itemize}
-
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
-
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
-
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
-
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
+In deze bachelorproef zal er nagegaan worden hoe Machine Learning/Art Intelligence de kwaliteit van artikel master data kan verhogen. Er zal een onderzoek verricht worden naar welke technologieën er al op de markt zijn. Ook zal er nagegaan worden of het zelf maken van zo een technologie rendabel genoeg is. Op het onderzoek gebaseerd zal er een proof-of-concept opgesteld worden. 
 
 %---------- Stand van zaken ---------------------------------------------------
 
 \section{State-of-the-art}%
 \label{sec:state-of-the-art}
-
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
-
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
-
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
-
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
-
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
@@ -42,7 +19,17 @@ Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle no
 %   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
 %   ...'')
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+De meeste bedrijven gebruiken tegenwoordig honderden verschillende applicaties en systemen die verschillende afdelingen doorkruisen. Bijvoorbeeld: Enterpise Resource Planning (ERP), Human Capital Management (HCM) en Customer Relationship Management (CRM). Omdat zoveel mensen de data in deze systemen aanraken, is het daardoor gemakkelijker om geïsoleerde, dubbele, verouderde of zelfs tegenstrijdige data te hebben. Slechte gegevens leiden tot slechte besluitvormingen, hierbij is het dus belangrijk om te voldoen aan de behoefte aan tijdige, accurate informatie, zelfs als de gegevensbronnen toenemen, stappen bedrijven over op master data management (MDM) \autocite{SAP}.
+
+Master Data Management is een belangrijke methode voor het ontwikkelen en het behouden van de uniformiteit en nauwkeurigheid van de gedeelde master data van de organisatie. Met MDG kunnen bedrijven de uniformiteit en de nauwkeurigheid van hun belangrijke gegevensmiddelen verbeteren, zoals klantengegevens, productengegevens, activagegevens en locatiegegevens \autocite{Foote2023}.
+
+Master data gegevens worden omschreven als de kerngegevens van een organisatie. Ze zijn gebaseerd op informatie die zelf veranderen en die essentieel zijn voor het runnen van de bedrijfsactiviteiten. Bedrijven verzamelen en slaan steeds meer gegevens over hun producten, gegevensmiddelen, inventaris en klanten op. Deze moeten dan beheerd blijven om accuraat te zijn. Als er onnauwkeurige master data aanwezig is in het bedrijf, is het vaak moeilijker om intelligente beslissingen over het bedrijf te maken. 
+
+Voor de meeste bedrijvenactiviteiten zijn informatiesystemen (IS) belangrijke factoren voor de bedrijfsuitvoering en de besluitvorming. Volgens het onderzoek van \textcite{Knolmayer2006} toont aan dat ERP-systemen worden beschouwd als het centrale onderdeel van het huidige IS-landschap. Het biedt organisaties grote applicatiefunctionaliteit, die een groot deel van alle bedrijfsactiviteiten ondersteunt. Hun ontwerp belooft het probleem van gefragmenteerde informatie in grote organisaties op te lossen. Dit aan de hand van verschillende soorten gegevens uit zeer verschillende bedrijfsactiviteiten, zoals verkoop, personeelszaken, enz. samen te brengen in een consistent bedrijfsmodel. De distributie van master data wordt vaak nagegaan door een proces dat ervoor moet zorgen dat alle data wordt ingevoerd en goedgekeurd met inachtneming van de bedrijfsregels. Ook moet elke gebruiker en elk systeem nieuwe of bijgewerkte stamgegevens ontvangen zodra dat nodig is. Daardoor is het essentieel dat de kwaliteit van deze master data zo hoog mogelijk is. 
+
+Door de technologische ontwikkelingen is men ertoe geleid dat bedrijven steeds meer data opslaan. Het onderhoud van de gegevenskwaliteit wordt echter vaak verwaarloosd daardoor kent het voor sommige bedrijven zijn dat de slechte kwaliteit van de bedrijfsgegevens hoge kosten met zich meebrengt. Het artikel van \textcite{Haug2011} toont aan dat een perfecte datakwaliteit niet vereist is, maar dat de datakwaliteit tot aan een bepaald niveau moet worden verbeterd. Het identificeren van het optimale gegevenskwaliteitsniveau is hierbij noodzakelijk.
+
+\textcite{ Haug2011a} hebben een onderzoek uitgevoerd naar de belemmeringen voor het beheersen van de datakwaliteit in bedrijven. De eindresultaten van hun onderzoek geven aan dat een gebrek aan delegatie van verantwoordelijkheden voor het onderhouden van masterdata het enige aspect is dat de grootste impact heeft op de kwaliteit van master data. Ook blijkt dat de overgrote meerderheid van de bedrijven een standpunt heeft dat een slechte master datakwaliteit negatieve gevolgen heeft. 
 
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}%
@@ -58,7 +45,7 @@ Na deze fase zal de techniek of oplossing gekozen worden. Deze techniek of oplos
 
 In de volgende fase zal er een dataset verzameld worden. Het verzamelen van een representatieve dataset is essentieel voor het succes van het onderzoek. Er zal opzoek moeten gegaan worden naar een dataset met een brede scala aan master data zodat de kwaliteit van onze oplossing kan getest worden. Om een goede dataset te vinden zal deze samengesteld worden aan de hand van datasets van specifieke bedrijven die veel gebruik maken van material master data.
 
-In de vijfde fase zal er een proof-of-concept uitgewerkt worden. Gebaseerd op het onderzoek zal er een proof-of-concept ontworpen worden, die de kwaliteit van master data mogelijks kan verhogen. De nodige middelen zullen afhankelijk zijn van welke oplossing er uit het onderzoek is gekomen. De oplossing zal getraind worden aan de hand van de verzamelde dataset. 
+In de vijfde fase zal er een proof-of-concept uitgewerkt worden. Gebaseerd op het onderzoek zal er een proof-of-concept ontworpen worden met ML/AI, die de kwaliteit van master data mogelijks kan verhogen. De nodige middelen zullen afhankelijk zijn van welke oplossing er uit het onderzoek is gekomen. De oplossing zal getraind worden aan de hand van de verzamelde dataset. De proof-of-concept zal opgesteld worden zodanig dat als men iets wil ingeven er eerst een check gedaan wordt of deze data al dan niet al aanwezig is in de dataset zodat er geen dubbele en tegenstrijdige gegevens ingevoerd kunnen worden.
 
 Na de uitwerking van de proof-of-concept zal er onderzoek verricht worden naar hoe deze oplossing makkelijk in de SAP master data governance (MDG) tool kan geïntegreerd worden. Er zal gekeken worden naar waar en hoe we dit best implementeren om de uitwerking ervan optimaal te kunnen benutten.
 
