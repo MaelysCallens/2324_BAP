@@ -4,3 +4,51 @@
 
 \chapter{\IfLanguageName{dutch}{Proof-of-Concept}{Proof-of-Concept}}%
 \label{ch:ProofOfConcept}
+KORTE INLEIDING
+
+\section{\IfLanguageName{dutch}{Voorbereiding}{Preparation}}%
+\label{sec:voorbereiding}
+
+De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit kan gedaan worden met behulp van de pandas library.
+
+\begin{lstlisting}[language=Python, caption={Het inlezen van Excel-gegevens in een pandas dataframe.}]
+  import pandas as pd
+
+  # Define the file path and sheet names
+  excel_file_path = 'ExcelPOC.xlsx'
+  sheet_names = ['BUT000 - General', 'MA - Material']
+
+  # Read the Excel file using pd.ExcelFile
+  excel_file = pd.ExcelFile(excel_file_path)
+
+  # Read the sheets and drop NA values
+  general_sheet = excel_file.parse(sheet_names[0], index_col=1).dropna(axis=1)
+  material_sheet = excel_file.parse(sheet_names[1], index_col=2).dropna(axis=1)
+\end{lstlisting}
+
+Aangezien het Excelbestand uit verschillende tabbladen bestaat wordt eerst het tabblad ``BUT000 \textendash General'' ingelezen, dit bevat de basisdata van de artikels zoals het id, de naam en de prijs. De tweede kolom bevat de index en wordt dus via de parameter ``index\_col=1'' als index geselecteerd. Het tweede tabblad ``MA \textendash Material'' bevat de data van de materialen zoals de naam. De data wordt ingelezen in een pandas dataframe en de lege kolommen worden met het ``dropna(axis=1)'' commando verwijderd uit de dataframe.
+Vervolgens wordt uit hetzelfde bestand ook het tabblad met de materiaalgegevens ingeladen. In dit tabblad staat de index die overeenkomt met de index uit de basistabel in kolom 2. Ook voor deze tabel worden de lege kolommen uit de dataframe gehaald.
+
+\begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes.}]
+  # Merge the sheets
+  bap = general_sheet.merge(material_sheet)
+\end{lstlisting}
+
+Vervolgens worden beide dataframes met elkaar samengevoegd via het “merge” commando. Dit commando zal een dataframe maken die bestaat uit de eerste dataframe, met de kolommen van de tweede eraan toegevoegd op basis van de index. Het dataframe “bap” bestaat nu uit alle data van zowel de basistabel als de tabel met de materiaalgegevens.
+
+\begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes.}]
+  # Select and clean the data
+  data = data[['Item Number', 'Item Name', 'Description', 'Price', 'Category', 'Supplier', 'Location', 'Weight', 'Dimensions', 'Material']]
+  data['Item Name'] = data['Item Name'].apply(str)
+  data['Description'] = data['Description'].apply(str)
+  data['Price'] = data['Price'].apply(str)
+  data['Category'] = data['Category'].apply(str)
+  data['Supplier'] = data['Supplier'].apply(str)
+  data['Location'] = data['Location'].apply(str)
+  data['Weight'] = data['Weight'].apply(str)
+  data['Dimensions'] = data['Dimensions'].apply(str)
+  data['Material'] = data['Material'].apply(str)
+\end{lstlisting}
+
+Vervolgens wordt de data geselecteerd die nodig is voor de proof-of-concept. De kolommen die geselecteerd worden zijn: Item Number, Item Name, Description, Price, Category, Supplier, Location, Weight, Dimensions en Material. De kolommen worden geselecteerd door de kolomnaam in een lijst te plaatsen en deze lijst als index te gebruiken. 
+Ook wordt voor de tekstvelden die een nummer kunnen bevatten het type geconverteerd naar “string” waarden. Dit wordt gedaan om syntax fouten te vermijden. In volgende stappen worden verschillende bewerkingen op de data gedaan, en zonder deze conversie kan Python soms denken dat een locatie een ‘integer’ is in plaats van een ‘string’ vanwege het getal die aangeeft in welke opslag het gelegen is, waardoor het programma vast- loopt door het vergelijken van nummers met letters.
