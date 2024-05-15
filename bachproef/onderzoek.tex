@@ -1,0 +1,54 @@
+%%=============================================================================
+%% Onderzoek
+%%=============================================================================
+
+\chapter{\IfLanguageName{dutch}{Onderzoek}{Research}}%
+\label{ch:Onderzoek}
+
+Zoals beschreven in de methodologie, zal er een onderzoek gedaan worden naar de requirements waaraan een duplicaat detectie systeem moet voldoen. Daarna zal er gekeken worden naar bestaande tools en technieken die al aanwezig zijn op de markt op vlak van duplicates en hun functionaliteiten. 
+
+\section{\IfLanguageName{dutch}{Requirementsanalyse}{Requirementsanalyse}}%
+\label{sec:requirementsanalyse}
+
+Een duplicaat detectie systeem voor SAP artikeldata moet aan verschillende eisen voldoen om effectief te zijn.
+\\Een eerste requirement waarop tools kunnen beoordeeld worden is hoe ze omgaan met simpele schijffouten of variaties van de schrijfwijze van artikelnamen en beschrijvingen. Een voorbeeld van zo een schrijffout of variatie is een situatie waarin het bedrijf het artikel “PlayStation 5” heeft zitten in hun systeem, maar een gebruiker probeert het artikel “Playstation V” of “Playstation 5”  toe te voegen.
+\\Een tweede belangrijk aspect bij een duplicaat detectie systeem is of het systeem woorden die fonetisch hetzelfde klinken kan herkennen. Zo hebben de Engelse woorden “queue” en “cue” een andere schrijfwijze, maar de betekenis en uitspraak van deze woorden is wel hetzelfde. Als er verschillende gebruikers zo werken, zullen er veel dezelfde artikels in het systeem aanwezig zijn die op het eerste zicht niet op elkaar lijken.
+\\Een derde requirement is in hoeverre tools voldoen aan standaardisatie. Hierbij kan er gekeken worden naar de afkortingen die voor kunnen komen in de naam van een artikel. Zo kan een duplicaat detectie systeem in een ideaal scenario herkennen dat “Samsung TV” en “Samsung Televisie” hetzelfde betekenen. Verschillende talen en landen hebben elk hun eigen afkortingen, een goede tool kan al deze zaken opsporen.
+\\Als laatste requirement is het belangrijk of er onderzocht wordt of een tool goed overweg kan met speciale tekens en karakters. Namen van artikels die in het systeem zitten onder een andere taal, kunnen speciale karakters of tekens bevatten. Zo kan het voorvallen dat “Nintendo – Switch” onder de Japanse naam zich bevindt in het systeem. Duplicaat detectie systemen die duplicaten tussen verschillende alfabetten en tekens kunnen herkennen zijn daarom ook een grote meerwaarde. 
+\\In alle gevallen wordt er verwachte dat een duplicaat detectie systeem zal aantonen dat er hoge gelijkenissen zijn tussen deze artikelnamen. Idealiter krijgt de gebruiker dan een melding waardoor hij dan zelf kan controleren of het al dan niet om een duplicaat gaat.
+
+\section{\IfLanguageName{dutch}{Tools}{Tools}}%
+\label{sec:tools}
+Dit hoofdstuk richt zit op het beoordelen van enkele tools die vandaag de dag op de markt aanwezig zijn op basis van de requirements die in het vorige hoofdstuk zijn opgesteld. De vier vooropgestelde requirements kunnen aftoetsen of een duplicaat detectie tool al dan niet effectief is.
+
+2.1	\subsection{SAP}
+Standaard werkt SAP zonder een geavanceerde duplicaatdetectie. Bij het aanmaken en opzoeken van een material kan de gebruiker de naam invoeren en zal wanneer deze naam met maar één karakter verschilt van een bestaande, zal SAP deze naam niet herkennen. Hierdoor kunnen duplicaten makkelijk aangemaakt worden. Met andere woorden onze eerste requirement, het herkennen van schrijffouten en schrijfwijzes, wordt op geen enkele manier herkend binnen een standaard SAP-systeem.
+\\Ook wordt standaardisatie niet toegepast. Gebruikers kunnen allerlei afkortingen invullen zonder dat SAP ze herkent als duplicaat. 
+\\Ook voldoet een standaard SAP-implementatie niet aan de andere twee requirements. Het detecteren van duplicaten worden helemaal niet toegepast binnenin een SAP-systeem. Dit kan voor veel problemen leiden wanneer verschillende gebruikers in contact komen met artikel data. Er is technisch gezien niets dat het systeem beschermt tegen onvermijdelijke menselijke fouten.
+
+2.2	\subsection{SAP Master Data Governance}
+SAP biedt nu zelf een tool aan die deze problemen aanpakt. 
+\\SAP Master Data Governance (MDG) is een aanvulling die ontworpen is voor het beheer van master data in SAP, zoals eerder vermeld in Hoofdstuk~\ref{ch:stand-van-zaken}. Het zorgt voor een uniforme en consistente weergave van de master data, de workflows en de beleidregels om de gegevenskwaliteit en-bescherming te waarborgen. 
+\\Door middel van MDG kan een gebruiker niet alleen de naam, maar ook andere attributen van een artikel opzoeken. Zo kan er gecontroleerd worden of een bepaald naam van het artikel al aanwezig in het systeem. Door deze zoekfunctionaliteit is er een mogelijkheid tot fuzzy search. Hierbij worden schrijffouten en andere variaties in schrijfwijzen herkend als mogelijke duplicaten. 
+\\Daarnaast biedt SAP MDG een duplicate check functie aan. Hierbij controleert de functie automatisch of de gegevens van een nieuw artikel overeenkomen met een bestaand artikel. De gebruiker krijgt dan een melding als er een mogelijk duplicaat gevonden wordt. 
+\\ SAP MDG biedt ook mogelijkheden om het matching proces verder te configueren. Gebruikers kunnen bijvoorbeeld gewichten toekennen aan bepaalde criteria, zoals leveranciers, om de relevatie van overeenkomsten te bepalen.
+\\Echter komen er extra kosten en aanzienlijke inspanningen voor implementatie en configuratie boven op de bestaande SAP-infrastructuur en licentiekosten voor het herkennen van schrijffouten binnen SAP MDG.
+
+2.3	\subsection{Syniti Match}
+\textcite{SynitiAbout} is een bedrijf dat ondernemingen helpt met het leveren van gegevens waarop hun klanten  vertrouwen om groei te stimuleren en risico's te verminderen.
+\\Ze bieden zowel de technologie als de expertise die nodig is om een datatraject te ondersteunen, bedrijfskennis te vergroten, nieuwe bronnen van potentieel te ontsluiten en nieuwe mogelijkheden voor groei vrij te maken.
+\\Syniti heeft een Data Matching Software, genaamd Syniti Match, waarin duplicaten in data gedetecteerd kunnen worden \autocite{SynitiMatch}. Dit proces gebeurt in verschillende stappen. 
+\\Als eerste wordt kwalitatieve analyselogica gebruikt. Hierbij onderzoekt hun Artificiële Intelligence eerst de data om patronen te herkennen en associaties tussen worden te maken. Ook wordt onvolledige of incorrecte informatie geïdentificeerd. 
+\\Vervolgens wordt de data verwerkt door allerlei verschillende matching-algoritmen. Deze algoritmen worden op een intelligente wijze gecombineerd met elkaar om verschillende soorten gelijkenissen te herkennen. Syniti Match past automatische extractie, normalisatie en parsing toe. De data worden gegroepeerd in clusters en geanalyseerd op gelijkenissen. Dit proces kan meerdere keren herhaald worden, waarbij telkens verschillende groepen en tokens worden gebruikt om verschillende soorten gelijkenissen te detecteren. 
+\\Na deze fase worden alle records per groep vergeleken. De verschillende attributen krijgen scores op basis van hun gelijkenis, waarbij elk attribuut een gewicht toegewezen krijgt. Dit gewicht geeft de invloed op de gelijkenis aan. Deze scores worden dan opgeteld om een gelijkheidsscrore te bereken. Hoe hoger deze score is, hoe groter de kans is dat deze twee datarecords over hetzelfde artikel gaan. 
+\\Syniti Match lijkt een volwaardig product te zijn die voldoet aan alle vooropgestelde requirements uit het onderzoek. Het kan schrijffouten en worden identificeren die fonetisch op elkaar lijken. Het maakt ook gebruik van een standaardisatie waarbij verschillende afgekorte woorden kunnen gelinkt worden aan de voluit geschreven versie ervan. Tot slot kan Syniti Match ook werken met verschillende speciale tekens en alfabetten om mogelijkse duplicaten te herkennen.
+
+2.4	\subsection{IBM InfoSphere Master Data Management}
+Als voorlaatste tool wordt IBM Infosphere Master Data Management onderzocht. 
+\textcite{IBMAbout}, wat staat voor International Business Machines Corporation, is een wereldwijd toonaangevend technologiebedrijf dat zich richt op het aanbieden van hardware, software en services op het gebied van informatietechnologie (IT) en bedrijfsoplossingen.
+\\Als eerst bestaat er probalistic matching.  Hierbij wordt de waarschijnlijkheid dat een bepaald veld een bepaalde waarde heeft in overweging genomen \autocite{IBMMatching}.
+\\Daarnaast bestaat er deterministic matching, hierbij wordt er bij de matching rekening gehouden met de matchende data en het eventuele ontbreken van kritieke data in één of beide records voor het vaststellen van een match. 
+\\IBM Infosphere MDM voldoet echter niet aan alle requirements. Hoewel de schrijffouten in data worden herkend, wordt de derde requirement, standaardisatie, niet toegepast. Ook aan de tweede requirement wordt er niet voldaan. Er kunnen geen fonetische matches verkregen worden en ook met de laatste requirement in verband met de speciale tekens of karakters wordt er geen rekening gehouden.
+
+\subsection{Pimcore Product Information Management}
+
