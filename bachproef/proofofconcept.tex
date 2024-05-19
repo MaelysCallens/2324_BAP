@@ -4,55 +4,133 @@
 
 \chapter{\IfLanguageName{dutch}{Proof-of-Concept}{Proof-of-Concept}}%
 \label{ch:ProofOfConcept}
-Het prototype gaat in verschillende stappen te werk. Ten eerste zal een dataset van 5 000 records van artikel data verwerkt worden en klaargemaakt om het model op te trainen. In eerste instantie zal het model deze records dan eerst opdelen in verschillende grote groepen die gelijkenissen met elkaar vertonen. ...
 
-\section{\IfLanguageName{dutch}{Model opstellen}{Model creating}}%
-\label{sec:model}
+Nu de bestaande tools en technieken met betrekking tot duplicaat detectie systemen en hun functionaliteiten besproken zijn, kan het proof-of-concept uitgewerkt worden. Er zal een duplicaat detectie systeem ontworpen worden die gebruik maakt van Machine Learning technieken.
+\\Het prototype gaat in verschillende stappen te werk. Ten eerste zal een dataset van 5 000 records van artikel data verwerkt en klaargemaakt worden om het model te trainen. Daarna zal het model deze records opdelen in verschillende grote groepen die gelijkenissen met elkaar voortonen om zo makkelijker en sneller duplicaten te detecteren. Als laatste stap zal dan het effectieve duplicaat detectie systeem opgezet worden en zullen de duplicaten geanalyseerd worden.
 
-De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit kan gedaan worden met behulp van de pandas library.
-
-\begin{lstlisting}[language=Python, caption={Het inlezen van Excel-gegevens in een pandas dataframe.}]
+\section{\IfLanguageName{dutch}{Data preparatie}{Data preparation}}%
+\label{sec:dataPreparatie}
+ZEGGEN IN WELKE KOLOM WAT STAAT!!!
+\\De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit wordt gedaan met behulp van de pandas library. Dit is nodig omdat pandas een krachtige library biedt voor data-analyse en manipulatie in Python. Het proces begint met het definiëren van het pad naar het Excel-bestand en de namen van de tabbladen die moeten worden ingelezen.
+\begin{lstlisting}[language=Python, caption={Het inlezen van Excel-gegevens in een pandas dataframe}]
   import pandas as pd
-
+  
   # Define the file path and sheet names
   excel_file_path = 'ExcelPOC.xlsx'
   sheet_names = ['MARA - Basisgegevens', 'MAKT - Omschrijving', 'MBEW - Boekhouding']
 
-  # Read the Excel file using pd.ExcelFile
+  # Read the Excel file
   excel_file = pd.ExcelFile(excel_file_path)
 
-  # Read the sheets and drop NA values
+  # Read the sheets
   sheets = {}
   for sheet_name in sheet_names:
-    sheets[sheet_name] = excel_file.parse(sheet_name, index_col=None).dropna(axis=1)
+      sheets[sheet_name] = excel_file.parse(sheet_name, index_col=None)
 \end{lstlisting}
 
-Aangezien het Excelbestand uit verschillende tabbladen bestaat wordt eerst het tabblad ``BUT000 \textendash General'' ingelezen, dit bevat de basisdata van de artikels zoals het id, de naam en de prijs. De tweede kolom bevat de index en wordt dus via de parameter ``index\_col=1'' als index geselecteerd. Het tweede tabblad ``MA \textendash Material'' bevat de data van de materialen zoals de naam. De data wordt ingelezen in een pandas dataframe en de lege kolommen worden met het ``dropna(axis=1)'' commando verwijderd uit de dataframe.
-Vervolgens wordt uit hetzelfde bestand ook het tabblad met de materiaalgegevens ingeladen. In dit tabblad staat de index die overeenkomt met de index uit de basistabel in kolom 2. Ook voor deze tabel worden de lege kolommen uit de dataframe gehaald.
-
-\begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes.}]
+Vervolgens worden de dataframes die uit de verschillende tabbladen zijn ingelezen, samengevoegd. Dit gebeurt door middel van een outer join op de kolom 'Bron-ID', zodat alle gegevens behouden blijven, zelfs als sommige records niet in alle tabbladen voorkomen. Het gebruik van een outer join is belangrijk omdat dit ervoor zorgt dat geen data verloren gaat. Bij een inner join zouden alleen de records die in alle tabbladen voorkomen worden behouden, wat mogelijk waardevolle informatie zou verwijderen. De kolom ‘Bron-id’ bevat het id van de artikel data, daardoor moeten de gegevens aan de hand van deze kolom geordend worden. Na het samenvoegen vullen we eventuele ontbrekende waarden (NaN) met lege strings om problemen bij latere bewerkingen te voorkomen.
+\begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes}]
   # Merge the sheets
-  bap = sheets[sheet_names[0]]
-  for sheet_name in sheet_names[1:]:
-    bap = bap.merge(sheets[sheet_name])
+bap = sheets[sheet_names[0]]
+for sheet_name in sheet_names[1:]:
+    bap = bap.merge(sheets[sheet_name], how='outer', on='Bron-ID') # Use outer join to keep all data
 \end{lstlisting}
 
-Vervolgens worden beide dataframes met elkaar samengevoegd via het “merge” commando. Dit commando zal een dataframe maken die bestaat uit de eerste dataframe, met de kolommen van de tweede eraan toegevoegd op basis van de index. Het dataframe “bap” bestaat nu uit alle data van zowel de basistabel als de tabel met de materiaalgegevens.
-
-\begin{lstlisting}[language=Python, caption={Het selecteren en cleanen van de data.}]
-  # Select and clean the data
-  data = bap[['Brutogewicht', 'Nettogewicht', 'Volume', 'Artikelomschrijving', 'Artikelomschrijving.1', 'Prijseenheid']]
-  data['Brutogewicht'] = data['Brutogewicht'].apply(str)
-  data['Nettogewicht'] = data['Nettogewicht'].apply(str)
-  data['Volume'] = data['Volume'].apply(str)
-  data['Artikelomschrijving'] = data['Artikelomschrijving'].apply(str)
-  data['Artikelomschrijving.1'] = data['Artikelomschrijving.1'].apply(str)
-  data['Prijseenheid'] = data['Prijseenheid'].apply(str)
+Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolommen 'Artikelomschrijving', 'Artikelomschrijving.1' en 'Voorts.gem.prijs'. Er wordt gecontroleerd of de verwachte kollommen aanwezig zijn in het dataframe. Vervolgens worden de waarden omgezet naar strings en worden de eventuele ontbrekende waarden aangevult met lege strings. Dit helpt om syntaxfouten te vermijden en zorgt ervoor dat de data correct kan worden verwerkt.
+\begin{lstlisting}[language=Python, caption={Het selecteren en cleanen van de data}]
+  # Select and clean the data if columns exist
+  expected_columns = ['Artikelomschrijving', 'Artikelomschrijving.1', 'Voorts.gem.prijs']
+  if all(col in bap.columns for col in expected_columns):
+      data = bap[expected_columns]
+      data = data.astype(str).fillna('')  # Convert to string and fill NaNs with empty strings
+  else:
+    print("Some expected columns are missing in the DataFrame. Cannot proceed with data selection.")
+      data = pd.DataFrame(columns=expected_columns).astype(str)  # Create an empty DataFrame with expected columns
 \end{lstlisting}
 
-Vervolgens wordt de data geselecteerd die nodig is voor de proof-of-concept. De kolommen die geselecteerd worden zijn: brutogewicht, nettogewicht, volume, atikelomschrijving, artikelomschrijvingsgroep, prijseenheid. De kolommen worden geselecteerd door de kolomnaam in een lijst te plaatsen en deze lijst als index te gebruiken. 
-Ook wordt voor de tekstvelden die een nummer kunnen bevatten het type geconverteerd naar “string” waarden. Dit wordt gedaan om syntax fouten te vermijden. In volgende stappen worden verschillende bewerkingen op de data gedaan, en zonder deze conversie kan Python soms denken dat een locatie een ‘integer’ is in plaats van een ‘string’ vanwege het getal die aangeeft in welke opslag het gelegen is, waardoor het programma vastloopt door het vergelijken van nummers met letters.
 
-\section{\IfLanguageName{dutch}{Duplicaat Detectie algoritme}{Duplicate Detection algorithm}}%
-\label{sec:duplicaatdetectie}
 
+
+
+
+
+
+\section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
+\label{sec:duplicateeDetectie}
+
+De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elk cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
+\\Als eerste worden de velden opzetten die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
+\\Daarna wordt er een Dedupe instance opgezet en wordt deze voorbereidt deze op training met de dataset. De dataframe wordt geconverteerd naar een dictionary van lijsten, omdat Dedupe deze indeling verwacht.
+\begin{lstlisting}[language=Python, caption={Opzetten van een Dedupe instance en trainen van deze instance met de data}]
+  import dedupe
+
+  # Sample data
+  fields = [
+      {'field': 'Artikelomschrijving', 'type': 'String'},
+      {'field': 'Artikelomschrijving.1', 'type': 'String'},
+      {'field': 'Voorts.gem.prijs', 'type': 'String'}
+  ]
+
+  # Use the dedupe library for fuzzy matching
+  def dedupe_dataframe(dataframe, fields):
+    deduper = dedupe.Dedupe(fields)
+
+    # Convert dataframe to a dictionary of lists
+    data = {field['field']: dataframe[field['field']].tolist() for field in fields}
+
+    print("Fields expected by Dedupe:", [field['field'] for field in fields])
+    print("Fields in data:", list(data.keys()))
+    print("Dedupe object attributes:", dir(deduper))
+
+    # Check if field names in data match with expected fields
+    if set(data.keys()) != set([field['field'] for field in fields]):
+        print("Field names in data do not match with expected fields.")
+        return []
+
+    # Prepare the Dedupe instance based on data and clustering
+    # deduper.prepare_training(data)
+    try:
+        deduper.prepare_training(data)
+    except Exception as e:
+        print("Error while preparing Dedupe instance:", e)
+        return []
+
+    # Give labels to the selected training data using the consoleLabel method
+    dedupe.training.consoleLabel(deduper)
+
+    # Train the Dedupe instance
+    deduper.train()
+
+    # Apply a threshold value to find matches
+    threshold = 0.5
+
+    # Find matches with the get_matches() method
+    matches = deduper.match(data, threshold=threshold)
+
+    return matches
+
+  # Perform fuzzy matching using the Dedupe_dataframe
+  clustered_dupes = dedupe_dataframe(data, fields)
+\end{lstlisting}
+
+De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslagen in een DataFrame. Dit helpt bij het identificeren van mogelijke duplicaten in de dataset. 
+\\Na het trainen van de Dedupe instance en het uitvoeren van de matching, worde de resultaten geanalyseerd. De gedetecteerde duplicaten worden geplaatst in een gestructureerd formaat en worden opgeslaan in een dataframe voor verdere analyse. Voor elk cluster worden de records geidentifeeceerd die mogelijk duplicaten zijn en worden deze opgeslaan met hun respectieve scores. Dit helpt bij het bepalen van de nauwkeurigheid en effectiviteit van de deduplicatie.
+\begin{lstlisting}[language=Python, caption={Identificeren van mogelijke duplicaten in de dataset}]
+  # Analyze result and show dummy data
+  results = []
+  for cluster_id, (cluster, score) in enumerate(clustered_dupes):
+      for record_id in cluster:
+          results.append({
+              'cluster_id': cluster_id,
+              'record_id': record_id,
+              'score': score
+          })
+
+  results_df = pd.DataFrame(results)
+  print(results_df.head())
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Analyseren van de resultaten }{Analysis of the results}}%
+\label{sec:analyseResultaten}
+
+UITKOMST!!!!!!!!
