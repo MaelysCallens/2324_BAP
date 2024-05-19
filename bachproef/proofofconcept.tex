@@ -110,7 +110,17 @@ Na het definiëren van het model worden de input data voorbereid voor voorspelli
 \section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
 \label{sec:clusteringPOC}
 
-EN WAT IS UW PROBLEEM?
+Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data.
+\begin{lstlisting}[language=Python, caption={Uitvoeren van K-Means clustering}]
+  from sklearn.cluster import KMeans
+  
+  # Perform KMeans clustering
+  kmeans = KMeans(init='k-means++', n_clusters=3, n_init=10)
+  kmeans.fit(encoded_items)
+  P = kmeans.predict(encoded_items)
+\end{lstlisting}  
+WAAROM WORDT ER VOOR 3 GEKOZEN????
+
 
 
 \section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
@@ -136,17 +146,12 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
     # Convert dataframe to a dictionary of lists
     data = {field['field']: dataframe[field['field']].tolist() for field in fields}
 
-    print("Fields expected by Dedupe:", [field['field'] for field in fields])
-    print("Fields in data:", list(data.keys()))
-    print("Dedupe object attributes:", dir(deduper))
-
     # Check if field names in data match with expected fields
     if set(data.keys()) != set([field['field'] for field in fields]):
         print("Field names in data do not match with expected fields.")
         return []
 
     # Prepare the Dedupe instance based on data and clustering
-    # deduper.prepare_training(data)
     try:
         deduper.prepare_training(data)
     except Exception as e:
