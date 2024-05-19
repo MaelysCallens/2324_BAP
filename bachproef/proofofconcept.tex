@@ -79,12 +79,38 @@ De tekstvelden in de data moeten worden omgezet naar numerieke waarden. Dit gebe
 \section{\IfLanguageName{dutch}{Autoencoder model}{Autoencoder model}}%
 \label{sec:AutoencoderModelPOC}
 
+Een autoencoder model wordt opgezet om de data te reduceren. Een autoencoder is een type neuraal netwerk dat is ontworpen om data te comprimeren en vervolgens weer te reconstrueren. Het bestaat uit een encoder die de data comprimeert en een decoder die de data reconstrueert.
+\\We definiëren de encoder- en decoder-lagen met Dense-lagen en ReLU-activeringsfuncties. De encoder comprimeert de data naar een lagere dimensie, terwijl de decoder de data probeert terug te brengen naar de oorspronkelijke dimensie. Dit proces helpt om de belangrijkste kenmerken van de data te extraheren en irrelevante informatie te verminderen.
+\begin{lstlisting}[language=Python, caption={Opzetten van het autoencoder model}]
+  from tensorflow import keras
+  from tensorflow.keras.layers import Input, Dense
 
+  # Define the encoding layers
+  encoded_layer1 = keras.layers.Dense(encoding_dim1, activation='relu')(preprocessed_inputs[0])
+  encoded_layer2 = keras.layers.Dense(encoding_dim2, activation='relu')(encoded_layer1)
+
+  # Define the decoding layers
+  decoded_layer3 = keras.layers.Dense(encoding_dim2, activation='relu')(encoded_layer2)
+  decoded_layer2 = keras.layers.Dense(encoding_dim1, activation='relu')(decoded_layer3)
+
+  # Build the model
+  model = keras.Model(inputs=inputs, outputs=decoded_layer2)
+\end{lstlisting}
+
+
+Na het definiëren van het model worden de input data voorbereid voor voorspelling en wordt het model getraind om de data te comprimeren. De data worden omgezet in een lijst van kolommen, zodat het model elke kolom afzonderlijk kan verwerken. Vervolgens wordt het model gebruikt om de data te comprimeren, wat resulteert in een gereduceerde dataset die klaar is voor clustering.
+\begin{lstlisting}[language=Python, caption={Trainen van het model}]
+  # List input data for each input layer
+  input_data_list = [data[col] for col in data.columns]
+
+  # Predict with the model
+  encoded_items = model.predict(input_data_list)
+\end{lstlisting}
 
 \section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
 \label{sec:clusteringPOC}
 
-
+EN WAT IS UW PROBLEEM?
 
 
 \section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
