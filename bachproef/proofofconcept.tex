@@ -9,7 +9,7 @@ Nu de bestaande tools en technieken met betrekking tot duplicaat detectie system
 \\Het prototype gaat in verschillende stappen te werk. Ten eerste zal een dataset van 5 000 records van artikel data verwerkt en klaargemaakt worden om het model te trainen. Daarna zal het model deze records opdelen in verschillende grote groepen die gelijkenissen met elkaar voortonen om zo makkelijker en sneller duplicaten te detecteren. Als laatste stap zal dan het effectieve duplicaat detectie systeem opgezet worden en zullen de duplicaten geanalyseerd worden.
 
 \section{\IfLanguageName{dutch}{Data preparatie}{Data preparation}}%
-\label{sec:dataPreparatie}
+\label{sec:dataPreparatiePOC}
 ZEGGEN IN WELKE KOLOM WAT STAAT!!!
 \\De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit wordt gedaan met behulp van de pandas library. Dit is nodig omdat pandas een krachtige library biedt voor data-analyse en manipulatie in Python. Het proces begint met het definiëren van het pad naar het Excel-bestand en de namen van de tabbladen die moeten worden ingelezen.
 \begin{lstlisting}[language=Python, caption={Het inlezen van Excel-gegevens in een pandas dataframe}]
@@ -48,15 +48,47 @@ Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolom
       data = pd.DataFrame(columns=expected_columns).astype(str)  # Create an empty DataFrame with expected columns
 \end{lstlisting}
 
+\section{\IfLanguageName{dutch}{Input data voorbereiding }{Input data preperation}}%
+\label{sec:inputPreparatiePOC}
+
+In de volgende fase wordt een dictionary met input velden opgezet. Deze dictionary wordt later gebruikt om de data voor te bereiden voor verdere verwerking. Er wordt gebruik gemaakt van TensorFlow's tf.keras.Input om de velden te definiëren. Door elk veld als een aparte input te behandelen, kan er flexibeler omgegaan worden met de data en specifieke preprocessing technieken toepassen op verschillende kolommen.
+\begin{lstlisting}[language=Python, caption={Opzetten van een dictionary}]
+  # Create a dictionary to define the input layers
+  inputs = {}
+  for name, column in data.items():
+    inputs[name] = tf.keras.Input(shape=(1,), name=name, dtype=tf.string)
+\end{lstlisting}
+
+De tekstvelden in de data moeten worden omgezet naar numerieke waarden. Dit gebeurt met behulp van de StringLookup en CategoryEncoding methoden uit de tensorflow.keras.layers module. Deze methoden zorgen ervoor dat tekstgegevens kunnen worden omgezet naar een numeriek formaat dat door het model kan worden verwerkt. StringLookup zet elke unieke string om in een numerieke index. Vervolgens gebruikt CategoryEncoding deze indices om one-hot encoding toe te passen. One-hot encoding zet de indices om in binaire vectoren, wat helpt om de categorieën te representeren op een manier die door het model kan worden begrepen.
+\begin{lstlisting}[language=Python, caption={Omzetten van tekstvelden naar numerieke waarden}]
+  from tensorflow.keras.layers import StringLookup, CategoryEncoding
+  
+  # Preprocess the input data using StringLookup and CategoryEncoding
+  encoding_dim1 = 32
+  encoding_dim2 = 16
+  preprocessed_inputs = []
+  for name, input in inputs.items():
+      lookup = StringLookup(vocabulary=np.unique(data[name]))
+      one_hot = CategoryEncoding(num_tokens=lookup.vocabulary_size())
+      x = lookup(input)
+      x = one_hot(x)
+      preprocessed_inputs.append(x)
+\end{lstlisting}
+
+
+\section{\IfLanguageName{dutch}{Autoencoder model}{Autoencoder model}}%
+\label{sec:AutoencoderModelPOC}
 
 
 
+\section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
+\label{sec:clusteringPOC}
 
 
 
 
 \section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
-\label{sec:duplicateeDetectie}
+\label{sec:duplicateeDetectiePOC}
 
 De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elk cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
 \\Als eerste worden de velden opzetten die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
@@ -131,6 +163,6 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
 \end{lstlisting}
 
 \section{\IfLanguageName{dutch}{Analyseren van de resultaten }{Analysis of the results}}%
-\label{sec:analyseResultaten}
+\label{sec:analyseResultatenPOC}
 
 UITKOMST!!!!!!!!
