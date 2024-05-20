@@ -10,8 +10,8 @@ Nu de bestaande tools en technieken met betrekking tot duplicaat detectie system
 
 \section{\IfLanguageName{dutch}{Data preparatie}{Data preparation}}%
 \label{sec:dataPreparatiePOC}
-ZEGGEN IN WELKE KOLOM WAT STAAT!!!
-\\De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit wordt gedaan met behulp van de pandas library. Dit is nodig omdat pandas een krachtige library biedt voor data-analyse en manipulatie in Python. Het proces begint met het definiëren van het pad naar het Excel-bestand en de namen van de tabbladen die moeten worden ingelezen.
+
+De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Excel bevindt in te lezen in Python en om te zetten naar een pandas dataframe. Dit wordt gedaan met behulp van de pandas library. Dit is nodig omdat pandas een krachtige library biedt voor data-analyse en manipulatie in Python. Het proces begint met het definiëren van het pad naar het Excel-bestand en de namen van de tabbladen die moeten worden ingelezen. In het tabblad 'MARA - Basisgegevens' bevinden zich alle basisgegevens van de artikels, zoals het bruto- en nettogewicht en het volume . In het tabblad 'MAKT - Omschrijving' bevinden zich de namen en de omschrijvingen van de artikelen en in het tabblad 'MBEW - Boekhouding' bevinden zich de boekhoudkundige gegevens van de artikelen, zoals de prijs. Vervolgens wordt het Excel-bestand ingelezen en worden de gegevens van de verschillende tabbladen in aparte dataframes opgeslagen.
 \begin{lstlisting}[language=Python, caption={Het inlezen van Excel-gegevens in een pandas dataframe}]
   import pandas as pd
   
@@ -181,7 +181,7 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
 \end{lstlisting}
 
 De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslagen in een DataFrame. Dit helpt bij het identificeren van mogelijke duplicaten in de dataset. 
-\\Na het trainen van de Dedupe instance en het uitvoeren van de matching, worden de resultaten geanalyseerd. De gedetecteerde duplicaten worden geplaatst in een gestructureerd formaat en worden opgeslaan in een dataframe voor verdere analyse. Voor elk cluster worden de records geidentifeeceerd die mogelijk duplicaten zijn en worden deze opgeslaan met hun respectieve scores. Dit helpt bij het bepalen van de nauwkeurigheid en effectiviteit van de deduplicatie.
+\\Na het trainen van de Dedupe instance en het uitvoeren van de matching, worden de resultaten geanalyseerd. De gedetecteerde duplicaten worden geplaatst in een gestructureerd formaat en worden opgeslagen in een dataframe voor verdere analyse. Voor elk cluster worden de records geïdentificeerd  die mogelijk duplicaten zijn en worden deze opgeslagen met hun respectieve scores. Dit helpt bij het bepalen van de nauwkeurigheid en effectiviteit van de deduplicatie.
 \begin{lstlisting}[language=Python, caption={Identificeren van mogelijke duplicaten in de dataset}]
   # Analyze result and show dummy data
   results = []
