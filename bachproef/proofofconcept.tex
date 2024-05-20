@@ -47,7 +47,7 @@ Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolom
     data = pd.DataFrame(columns=expected_columns).astype(str)
 \end{lstlisting}
 
-\section{\IfLanguageName{dutch}{Input data voorbereiding }{Input data preperation}}%
+\section{\IfLanguageName{dutch}{Input data voorbereiding}{Input data preperation}}%
 \label{sec:inputPreparatiePOC}
 
 In de volgende fase wordt een dictionary met input velden opgezet. Deze dictionary wordt later gebruikt om de data voor te bereiden voor verdere verwerking. Er wordt gebruik gemaakt van TensorFlow's tf.keras.Input om de velden te definiëren. Door elk veld als een aparte input te behandelen, kan er flexibeler omgegaan worden met de data en specifieke preprocessing technieken toepassen op verschillende kolommen.
@@ -116,7 +116,7 @@ Na het definiëren van het model worden de input data voorbereid voor voorspelli
 \section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
 \label{sec:clusteringPOC}
 
-Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data. e resultaten hiervan worden opgeslagen in ‘P’. ‘P’ bevat nu een lijst die bestaat uit een nummer van 0 tot en met 2 van de cluster waartoe elk data record behoort. Er wordt gekozen voor 3 clusters omdat in hoofdstuk~\ref{ch:inputPreparatie} er z 3 attributen als input gedefinieerd zijn.
+Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data. e resultaten hiervan worden opgeslagen in ‘P’. ‘P’ bevat nu een lijst die bestaat uit een nummer van 0 tot en met 2 van de cluster waartoe elk data record behoort. Er wordt gekozen voor 3 clusters omdat in de output van de input dictionary er 3 attributen als input gedefinieerd zijn.
 \begin{lstlisting}[language=Python, caption={Uitvoeren van K-Means clustering}]
   from sklearn.cluster import KMeans
   
