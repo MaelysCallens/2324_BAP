@@ -36,7 +36,7 @@ for sheet_name in sheet_names[1:]:
     bap = bap.merge(sheets[sheet_name], how='outer', on='Bron-ID')
 \end{lstlisting}
 
-Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolommen 'Artikelomschrijving', 'Artikelomschrijving.1' en 'Voorts.gem.prijs'. Er wordt gecontroleerd of de verwachte kolommen aanwezig zijn in het dataframe. Vervolgens worden de waarden omgezet naar strings en worden de eventuele ontbrekende waarden aangevult met lege strings. Dit helpt om syntaxfouten te vermijden en zorgt ervoor dat de data correct kan worden verwerkt.
+Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolommen 'Artikelomschrijving', 'Artikelomschrijving.1' en 'Voorts.gem.prijs'. Er wordt gecontroleerd of de verwachte kolommen aanwezig zijn in het dataframe. Vervolgens worden de waarden omgezet naar strings en worden de eventuele ontbrekende waarden aangevuld met lege strings. Dit helpt om syntaxfouten te vermijden en zorgt ervoor dat de data correct kan worden verwerkt.
 \begin{lstlisting}[language=Python, caption={Het selecteren en cleanen van de data}]
   # Select and clean the data if columns exist
   expected_columns = ['Artikelomschrijving', 'Artikelomschrijving.1', 'Voorts.gem.prijs']
@@ -52,6 +52,9 @@ Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolom
 
 In de volgende fase wordt een dictionary met input velden opgezet. Deze dictionary wordt later gebruikt om de data voor te bereiden voor verdere verwerking. Er wordt gebruik gemaakt van TensorFlow's tf.keras.Input om de velden te definiëren. Door elk veld als een aparte input te behandelen, kan er flexibeler omgegaan worden met de data en specifieke preprocessing technieken toepassen op verschillende kolommen.
 \begin{lstlisting}[language=Python, caption={Opzetten van een dictionary}]
+  import tensorflow as tf
+  from tensorflow import keras
+
   # Create a dictionary to define the input layers
   inputs = {}
   for name, column in data.items():
