@@ -116,7 +116,7 @@ Na het definiëren van het model worden de input data voorbereid voor voorspelli
 \section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
 \label{sec:clusteringPOC}
 
-Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data.
+Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data. e resultaten hiervan worden opgeslagen in ‘P’. ‘P’ bevat nu een lijst die bestaat uit een nummer van 0 tot en met 2 van de cluster waartoe elk data record behoort. Er wordt gekozen voor 3 clusters omdat in hoofdstuk~\ref{ch:inputPreparatie} er z 3 attributen als input gedefinieerd zijn.
 \begin{lstlisting}[language=Python, caption={Uitvoeren van K-Means clustering}]
   from sklearn.cluster import KMeans
   
@@ -125,8 +125,6 @@ Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze te
   kmeans.fit(encoded_items)
   P = kmeans.predict(encoded_items)
 \end{lstlisting}  
-WAAROM WORDT ER VOOR 3 GEKOZEN????
-
 
 
 \section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
