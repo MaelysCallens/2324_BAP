@@ -206,8 +206,10 @@ dshfkhuifbs
   id	                Artikelomschrijving		 Artikelomschrijving.1 	                                      Voorts.gem.prijs	cluster_id	record_id		score
   000000000000405000  Playstation 5          Playstation 5	                                              499,00	          1	          255	         0.50913
   000000000000405020  Playstadion 5          Playstadion 5	                                              499,00	          1	          345	         0.50913
-  000000000000406240  Samsung Televesie      Samsung UE43CU7190 - 43 inch - 4K LED - 2023                 589,00	          2	          726	         0.34925
-  000000000000407620  Samsung Televesie      Samsung UE75CU7170UXXN - LED - 75- 4K Ultra HD - Smart TV  599,00	          2	          27	         0.34259
+  000000000000406240  Samsung Televisie      Samsung UE43CU7190 - 43 inch - 4K LED - 2023                 589,00	          2	          726	         0.34925
+  000000000000407620  Samsung Televisie      Samsung UE75CU7170UXXN - LED - 75- 4K Ultra HD - Smart TV  599,00	          2	          27	         0.34259
 \end{lstlisting}
-
+kdshfsfsdf
+Vanwege GDPR redenen is de effectieve data gesmaskeerd en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat ‘Playstadion 5’ als duplicaat wordt gezien van ‘Playstation 5’. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel ‘Samsung Televisie’ wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaat detectie systeem een vals positief duplicaat. 
+\\Deze proof-of-concept biedt al basis waarmee duplicaten gedetecteerd kunnen worden in een bestaande dataset. Het kan ook op nieuwe data uitgevoerd worden. Daarnaast is het model ook ontworpen zodat het kan blijven leren van andere data en zo het model geoptimaliseerd kan worden. Het verder onderzoeken en testen van nieuwe algoritmen op vlak van clustering en duplicaat detectie kan voor nog betere resultaten zorgen. 
 ksdhfkisqdf
