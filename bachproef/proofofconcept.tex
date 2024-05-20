@@ -31,8 +31,8 @@ De eerste stap van de voorbereidingsfase bestaat eruit om de data die zich in Ex
 Vervolgens worden de dataframes die uit de verschillende tabbladen zijn ingelezen, samengevoegd. Dit gebeurt door middel van een outer join op de kolom 'Bron-ID', zodat alle gegevens behouden blijven, zelfs als sommige records niet in alle tabbladen voorkomen. Het gebruik van een outer join is belangrijk omdat dit ervoor zorgt dat geen data verloren gaat. Bij een inner join zouden alleen de records die in alle tabbladen voorkomen worden behouden, wat mogelijk waardevolle informatie zou verwijderen. De kolom ‘Bron-id’ bevat het id van de artikel data, daardoor moeten de gegevens aan de hand van deze kolom geordend worden.
 \begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes}]
   # Merge the sheets
-bap = sheets[sheet_names[0]]
-for sheet_name in sheet_names[1:]:
+  bap = sheets[sheet_names[0]]
+  for sheet_name in sheet_names[1:]:
     bap = bap.merge(sheets[sheet_name], how='outer', on='Bron-ID')
 \end{lstlisting}
 
@@ -41,8 +41,8 @@ Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolom
   # Select and clean the data if columns exist
   expected_columns = ['Artikelomschrijving', 'Artikelomschrijving.1', 'Voorts.gem.prijs']
   if all(col in bap.columns for col in expected_columns):
-      data = bap[expected_columns]
-      data = data.astype(str).fillna('')
+    data = bap[expected_columns]
+    data = data.astype(str).fillna('')
   else:
     data = pd.DataFrame(columns=expected_columns).astype(str)
 \end{lstlisting}
@@ -74,11 +74,11 @@ De tekstvelden in de data moeten worden omgezet naar numerieke waarden. Dit gebe
   encoding_dim2 = 16
   preprocessed_inputs = []
   for name, input in inputs.items():
-      lookup = StringLookup(vocabulary=np.unique(data[name]))
-      one_hot = CategoryEncoding(num_tokens=lookup.vocabulary_size())
-      x = lookup(input)
-      x = one_hot(x)
-      preprocessed_inputs.append(x)
+    lookup = StringLookup(vocabulary=np.unique(data[name]))
+    one_hot = CategoryEncoding(num_tokens=lookup.vocabulary_size())
+    x = lookup(input)
+    x = one_hot(x)
+    preprocessed_inputs.append(x)
 \end{lstlisting}
 
 
@@ -152,15 +152,15 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
 
     # Check if field names in data match with expected fields
     if set(data.keys()) != set([field['field'] for field in fields]):
-        print("Field names in data do not match with expected fields.")
-        return []
+      print("Field names in data do not match with expected fields.")
+      return []
 
     # Prepare the Dedupe instance based on data and clustering
     try:
-        deduper.prepare_training(data)
+      deduper.prepare_training(data)
     except Exception as e:
-        print("Error while preparing Dedupe instance:", e)
-        return []
+      print("Error while preparing Dedupe instance:", e)
+      return []
 
     # Give labels to the selected training data using the consoleLabel method
     dedupe.training.consoleLabel(deduper)
@@ -186,12 +186,12 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
   # Analyze result and show dummy data
   results = []
   for cluster_id, (cluster, score) in enumerate(clustered_dupes):
-      for record_id in cluster:
-          results.append({
-              'cluster_id': cluster_id,
-              'record_id': record_id,
-              'score': score
-          })
+    for record_id in cluster:
+      results.append({
+        'cluster_id': cluster_id,
+        'record_id': record_id,
+        'score': score
+      })
 
   results_df = pd.DataFrame(results)
   print(results_df.head())
@@ -200,7 +200,7 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
 \section{\IfLanguageName{dutch}{Analyseren van de resultaten }{Analysis of the results}}%
 \label{sec:analyseResultatenPOC}
 
-
+TESTEST JAJA
 \begin{lstlisting}[language=Python, caption={Output dedupe dataframe}]
   id	                Artikelomschrijving		 Artikelomschrijving.1 	                                      Voorts.gem.prijs	cluster_id	record_id		score
   000000000000405000  Playstation 5          Playstation 5	                                              499,00	          1	          255	         0.50913
