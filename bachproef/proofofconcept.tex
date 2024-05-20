@@ -104,7 +104,7 @@ Een autoencoder model wordt opgezet om de data te reduceren. Een autoencoder is 
 \end{lstlisting}
 
 
-Na het definiëren van het model worden de input data voorbereid voor voorspelling en wordt het model getraind om de data te comprimeren. De data worden omgezet in een lijst van kolommen, zodat het model elke kolom afzonderlijk kan verwerken. Vervolgens wordt het model gebruikt om de data te comprimeren, wat resulteert in een gereduceerde dataset die klaar is voor clustering.
+Na het definiëren van het model worden de input data voorbereid voor voorspellingen en worden het model getraind om de data te comprimeren. De data worden omgezet in een lijst van kolommen, zodat het model elke kolom afzonderlijk kan verwerken. Vervolgens wordt het model gebruikt om de data te comprimeren, wat resulteert in een gereduceerde dataset die klaar is voor clustering.
 \begin{lstlisting}[language=Python, caption={Trainen van het model}]
   # List input data for each input layer
   input_data_list = [data[col] for col in data.columns]
@@ -116,7 +116,7 @@ Na het definiëren van het model worden de input data voorbereid voor voorspelli
 \section{\IfLanguageName{dutch}{Clustering}{Clustering}}%
 \label{sec:clusteringPOC}
 
-Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data. e resultaten hiervan worden opgeslagen in ‘P’. ‘P’ bevat nu een lijst die bestaat uit een nummer van 0 tot en met 2 van de cluster waartoe elk data record behoort. Er wordt gekozen voor 3 clusters omdat in de output van de input dictionary er 3 attributen als input gedefinieerd zijn.
+Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze techniek verdeelt de data in clusters op basis van gelijkenissen tussen de records. \\K-Means verdeelt de data in "n-clusters" clusters. Door de data in clusters te verdelen, kunnen er records gegroepeerd worden die vergelijkbaar zijn. Dit is nuttig voor het identificeren van patronen en mogelijke duplicaten in de data. De resultaten hiervan worden opgeslagen in ‘P’. ‘P’ bevat nu een lijst die bestaat uit een nummer van 0 tot en met 2 van de cluster waartoe elk data record behoort. Er wordt gekozen voor 3 clusters omdat in de output van de input dictionary er 3 attributen als input gedefinieerd zijn.
 \begin{lstlisting}[language=Python, caption={Uitvoeren van K-Means clustering}]
   from sklearn.cluster import KMeans
   
@@ -130,7 +130,7 @@ Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze te
 \section{\IfLanguageName{dutch}{Duplicaat detectie}{Duplicat Detection}}%
 \label{sec:duplicateeDetectiePOC}
 
-De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elk cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
+De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elke cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
 \\Als eerste worden de velden die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
 \\Daarna wordt er een Dedupe instance opgezet en wordt deze voorbereidt op een training met de dataset. De dataframe wordt geconverteerd naar een dictionary van lijsten, omdat Dedupe deze indeling verwacht.
 \begin{lstlisting}[language=Python, caption={Opzetten van een Dedupe instance en trainen van deze instance met de data}]
@@ -208,7 +208,7 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
   000000000000407620  Samsung Televisie      Samsung UE75CU7170UXXN - LED - 75- 4K Ultra HD - Smart TV  599,00	          2	          27	         0.34259
 \end{lstlisting}
 
-Als output van deze code, volgt een dataset waarin de oorpronkelijke data is uitgebreid met 'cluster-id', 'record-id' en 'score'. De 'cluster-id' bevat een nummer van 0 tot en met 2 die aangeeft tot welke cluster het record behoort. Het 'record-id' geeft het id van het record terug en de 'score' geeft aan hoe groot de score is dat er een match zich bevindt in de dataset.
+Als output van deze code, volgt een dataset waarin de oorpronkelijke data is uitgebreid met 'cluster-id', 'record-id' en 'score'. De 'cluster-id' bevat een nummer van 0 tot en met 2 die aangeeft tot welke cluster het record behoort. Het 'record-id' geeft het id van het record terug en de 'score' geeft aan hoe groot de kans is dat er een match zich bevindt in de dataset.
 Vanwege GDPR redenen is de effectieve data gemaskeerd  en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat 'Playstadion 5' als duplicaat wordt gezien van 'Playstation 5'. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel 'Samsung Televisie' wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaat detectie systeem een vals positief duplicaat.
 \\Deze proof-of-concept biedt al basis waarmee duplicaten gedetecteerd kunnen worden in een bestaande dataset. Het kan ook op nieuwe data uitgevoerd worden. Daarnaast is het model ook ontworpen zodat het kan blijven leren van andere data en zo het model geoptimaliseerd kan worden. Het verder onderzoeken en testen van nieuwe algoritmen op vlak van clustering en duplicaat detectie kan voor nog betere resultaten zorgen. 
 \\ \\Vooraleer het prototype ontwerpen werd, zijn er verschillende requirements opgesteld waaraan een goed duplicaat detectie systeem moet voldoen.
