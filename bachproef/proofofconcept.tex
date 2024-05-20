@@ -131,8 +131,8 @@ Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze te
 \label{sec:duplicateeDetectiePOC}
 
 De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elk cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
-\\Als eerste worden de velden opzetten die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
-\\Daarna wordt er een Dedupe instance opgezet en wordt deze voorbereidt deze op training met de dataset. De dataframe wordt geconverteerd naar een dictionary van lijsten, omdat Dedupe deze indeling verwacht.
+\\Als eerste worden de velden die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
+\\Daarna wordt er een Dedupe instance opgezet en wordt deze voorbereidt op een training met de dataset. De dataframe wordt geconverteerd naar een dictionary van lijsten, omdat Dedupe deze indeling verwacht.
 \begin{lstlisting}[language=Python, caption={Opzetten van een Dedupe instance en trainen van deze instance met de data}]
   import dedupe
 
@@ -181,7 +181,7 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
 \end{lstlisting}
 
 De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslagen in een DataFrame. Dit helpt bij het identificeren van mogelijke duplicaten in de dataset. 
-\\Na het trainen van de Dedupe instance en het uitvoeren van de matching, worde de resultaten geanalyseerd. De gedetecteerde duplicaten worden geplaatst in een gestructureerd formaat en worden opgeslaan in een dataframe voor verdere analyse. Voor elk cluster worden de records geidentifeeceerd die mogelijk duplicaten zijn en worden deze opgeslaan met hun respectieve scores. Dit helpt bij het bepalen van de nauwkeurigheid en effectiviteit van de deduplicatie.
+\\Na het trainen van de Dedupe instance en het uitvoeren van de matching, worden de resultaten geanalyseerd. De gedetecteerde duplicaten worden geplaatst in een gestructureerd formaat en worden opgeslaan in een dataframe voor verdere analyse. Voor elk cluster worden de records geidentifeeceerd die mogelijk duplicaten zijn en worden deze opgeslaan met hun respectieve scores. Dit helpt bij het bepalen van de nauwkeurigheid en effectiviteit van de deduplicatie.
 \begin{lstlisting}[language=Python, caption={Identificeren van mogelijke duplicaten in de dataset}]
   # Analyze result and show dummy data
   results = []
