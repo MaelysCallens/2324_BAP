@@ -61,6 +61,10 @@ In de volgende fase wordt een dictionary met input velden opgezet. Deze dictiona
     inputs[name] = tf.keras.Input(shape=(1,), name=name, dtype=tf.string)
 \end{lstlisting}
 
+\begin{lstlisting}[language=Python, caption={Uitkomst van de dictionary}]
+  {'Artikelomschrijving': <KerasTensor shape=(None, 1), dtype=string, sparse=None, name=Artikelomschrijving>, 'Artikelomschrijving.1': <KerasTensor shape=(None, 1), dtype=string, sparse=None, name=Artikelomschrijving.1>, 'Voorts.gem.prijs': <KerasTensor shape=(None, 1), dtype=string, sparse=None, name=Voorts.gem.prijs>}
+\end{lstlisting}
+
 De tekstvelden in de data moeten worden omgezet naar numerieke waarden. Dit gebeurt met behulp van de StringLookup en CategoryEncoding methoden uit de tensorflow.keras.layers module. Deze methoden zorgen ervoor dat tekstgegevens kunnen worden omgezet naar een numeriek formaat dat door het model kan worden verwerkt. StringLookup zet elke unieke string om in een numerieke index. Vervolgens gebruikt CategoryEncoding deze indices om one-hot encoding toe te passen. One-hot encoding zet de indices om in binaire vectoren, wat helpt om de categorieën te representeren op een manier die door het model kan worden begrepen.
 \begin{lstlisting}[language=Python, caption={Omzetten van tekstvelden naar numerieke waarden}]
   from tensorflow.keras.layers import StringLookup, CategoryEncoding
