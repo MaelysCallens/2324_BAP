@@ -28,7 +28,7 @@ ZEGGEN IN WELKE KOLOM WAT STAAT!!!
       sheets[sheet_name] = excel_file.parse(sheet_name, index_col=None)
 \end{lstlisting}
 
-Vervolgens worden de dataframes die uit de verschillende tabbladen zijn ingelezen, samengevoegd. Dit gebeurt door middel van een outer join op de kolom 'Bron-ID', zodat alle gegevens behouden blijven, zelfs als sommige records niet in alle tabbladen voorkomen. Het gebruik van een outer join is belangrijk omdat dit ervoor zorgt dat geen data verloren gaat. Bij een inner join zouden alleen de records die in alle tabbladen voorkomen worden behouden, wat mogelijk waardevolle informatie zou verwijderen. De kolom ‘Bron-id’ bevat het id van de artikel data, daardoor moeten de gegevens aan de hand van deze kolom geordend worden. Na het samenvoegen vullen we eventuele ontbrekende waarden (NaN) met lege strings om problemen bij latere bewerkingen te voorkomen.
+Vervolgens worden de dataframes die uit de verschillende tabbladen zijn ingelezen, samengevoegd. Dit gebeurt door middel van een outer join op de kolom 'Bron-ID', zodat alle gegevens behouden blijven, zelfs als sommige records niet in alle tabbladen voorkomen. Het gebruik van een outer join is belangrijk omdat dit ervoor zorgt dat geen data verloren gaat. Bij een inner join zouden alleen de records die in alle tabbladen voorkomen worden behouden, wat mogelijk waardevolle informatie zou verwijderen. De kolom ‘Bron-id’ bevat het id van de artikel data, daardoor moeten de gegevens aan de hand van deze kolom geordend worden.
 \begin{lstlisting}[language=Python, caption={Het mergen van twee dataframes}]
   # Merge the sheets
 bap = sheets[sheet_names[0]]
@@ -36,7 +36,7 @@ for sheet_name in sheet_names[1:]:
     bap = bap.merge(sheets[sheet_name], how='outer', on='Bron-ID')
 \end{lstlisting}
 
-Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolommen 'Artikelomschrijving', 'Artikelomschrijving.1' en 'Voorts.gem.prijs'. Er wordt gecontroleerd of de verwachte kollommen aanwezig zijn in het dataframe. Vervolgens worden de waarden omgezet naar strings en worden de eventuele ontbrekende waarden aangevult met lege strings. Dit helpt om syntaxfouten te vermijden en zorgt ervoor dat de data correct kan worden verwerkt.
+Tot slot wordt de benodigde data geselecteerd. In dit geval betreft het de kolommen 'Artikelomschrijving', 'Artikelomschrijving.1' en 'Voorts.gem.prijs'. Er wordt gecontroleerd of de verwachte kolommen aanwezig zijn in het dataframe. Vervolgens worden de waarden omgezet naar strings en worden de eventuele ontbrekende waarden aangevult met lege strings. Dit helpt om syntaxfouten te vermijden en zorgt ervoor dat de data correct kan worden verwerkt.
 \begin{lstlisting}[language=Python, caption={Het selecteren en cleanen van de data}]
   # Select and clean the data if columns exist
   expected_columns = ['Artikelomschrijving', 'Artikelomschrijving.1', 'Voorts.gem.prijs']
