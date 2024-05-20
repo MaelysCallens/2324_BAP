@@ -210,6 +210,14 @@ dshfkhuifbs
   000000000000407620  Samsung Televisie      Samsung UE75CU7170UXXN - LED - 75- 4K Ultra HD - Smart TV  599,00	          2	          27	         0.34259
 \end{lstlisting}
 kdshfsfsdf
-Vanwege GDPR redenen is de effectieve data gesmaskeerd en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat ‘Playstadion 5’ als duplicaat wordt gezien van ‘Playstation 5’. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel ‘Samsung Televisie’ wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaat detectie systeem een vals positief duplicaat. 
+Vanwege GDPR redenen is de effectieve data gemaskeerd  en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat ‘Playstadion 5’ als duplicaat wordt gezien van ‘Playstation 5’. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel ‘Samsung Televisie’ wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaat detectie systeem een vals positief duplicaat. 
 \\Deze proof-of-concept biedt al basis waarmee duplicaten gedetecteerd kunnen worden in een bestaande dataset. Het kan ook op nieuwe data uitgevoerd worden. Daarnaast is het model ook ontworpen zodat het kan blijven leren van andere data en zo het model geoptimaliseerd kan worden. Het verder onderzoeken en testen van nieuwe algoritmen op vlak van clustering en duplicaat detectie kan voor nog betere resultaten zorgen. 
 ksdhfkisqdf
+\\ \\Vooraleer het prototype ontwerpen werd, zijn er verschillende requirements opgesteld waaraan een goed duplicaat detectie systeem moet voldoen.
+\\Ten eerste is het in staat om schrijffouten en variaties in schrijfwijze te detecteren en zo duplicaten te herkennen. Ook pas de standaardisatie toe om duplicaten te kunnen identificeren.
+\\Echter, kan het model nog geen fonetische gelijkenissen herkennen. Dit is een mogelijke verbetering die kan worden toegevoegd aan het model. Dit zou mogelijks kunnen verbeterd worden door ene geschikte Python library toe te voegen die deze functionaliteit ondersteunt. Eveneens kunnen ook andere fuzzy matching algoritmen, die alternatieve methoden gebruiken in plaats van Affine Gap Penalty, geïntegreerd worden.
+\\Speciale tekens en karakters worden momenteel nog niet door het model verwerkt.
+\\Door matching-algoritmen kan de data verwerkt worden en een score toegevoegd worden aan mogelijkse matches. Als er meerdere algoritmen worden toegevoegd aan het model, kan er beslist worden om het ene algoritme zwaarder door te laten wegen dan het andere. 
+skdfjenfsdfsdfsd
+idskfnsdkf sdfbksdf
+ksdfosf sdjsdfds jdj ofjizn jdjfjeizn jkjin 
