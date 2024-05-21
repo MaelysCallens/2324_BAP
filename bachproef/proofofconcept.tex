@@ -150,11 +150,6 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
     # Convert dataframe to a dictionary of lists
     data = {field['field']: dataframe[field['field']].tolist() for field in fields}
 
-    # Check if field names in data match with expected fields
-    if set(data.keys()) != set([field['field'] for field in fields]):
-      print("Field names in data do not match with expected fields.")
-      return []
-
     # Prepare the Dedupe instance based on data and clustering
     try:
       deduper.prepare_training(data)
@@ -171,7 +166,7 @@ De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicat
     # Apply a threshold value to find matches
     threshold = 0.5
 
-    # Find matches with the get_matches() method
+    # Find matches with the match() method
     matches = deduper.match(data, threshold=threshold)
 
     return matches
@@ -194,7 +189,7 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
       })
 
   results_df = pd.DataFrame(results)
-  print(results_df.head())
+  print(results_df)
 \end{lstlisting}
 
 \section{\IfLanguageName{dutch}{Analyseren van de resultaten }{Analysis of the results}}%
