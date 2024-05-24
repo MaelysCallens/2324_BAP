@@ -5,8 +5,8 @@
 \chapter{\IfLanguageName{dutch}{Proof-of-Concept}{Proof-of-Concept}}%
 \label{ch:ProofOfConcept}
 
-Nu de bestaande tools en technieken met betrekking tot duplicaat detectie systemen en hun functionaliteiten besproken zijn, kan het proof-of-concept uitgewerkt worden. Er zal een duplicaat detectie systeem ontworpen worden die gebruik maakt van Machine Learning technieken.
-\\Het prototype gaat in verschillende stappen te werk. Ten eerste zal een dataset van 5 000 records van artikel data verwerkt en klaargemaakt worden om het model te trainen. Daarna zal het model deze records opdelen in verschillende grote groepen die gelijkenissen met elkaar voortonen om zo makkelijker en sneller duplicaten te detecteren. Als laatste stap zal dan het effectieve duplicaat detectie systeem opgezet worden en zullen de duplicaten geanalyseerd worden.
+Nu de bestaande tools en technieken met betrekking tot duplicaatdetectiesystemen en hun functionaliteiten besproken zijn, kan het proof-of-concept uitgewerkt worden. Er zal een duplicaatdetectiesysteem ontworpen worden die gebruik maakt van Machine Learning technieken.
+\\Het prototype gaat in verschillende stappen te werk. Ten eerste zal een dataset van 5 000 records van artikel data verwerkt en klaargemaakt worden om het model te trainen. Daarna zal het model deze records opdelen in verschillende grote groepen die gelijkenissen met elkaar voortonen om zo makkelijker en sneller duplicaten te detecteren. Als laatste stap zal dan het effectieve duplicaatdetectiesysteem opgezet worden en zullen de duplicaten geanalyseerd worden.
 
 \section{\IfLanguageName{dutch}{Data preparatie}{Data preparation}}%
 \label{sec:dataPreparatiePOC}
@@ -131,7 +131,7 @@ Met de gereduceerde data wordt vervolgens K-Means clustering uitgevoerd. Deze te
 \label{sec:duplicateeDetectiePOC}
 
 De laatste stap in dit proof-of-concept is het detecteren van mogelijke duplicaten binnen elke cluster. Dit wordt gedaan met behulp van de dedupe library, die speciaal is ontworpen voor het vinden van duplicaten in datasets. Dedupe maakt gebruik van een combinatie van machine learning en fuzzy matching technieken om overeenkomende records te identificeren.
-\\Als eerste worden de velden die we willen gebruiken voor de duplicaatdetectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
+\\Als eerste worden de velden die we willen gebruiken voor de duplicaat detectie opgezet. Deze velden worden gespecificeerd als een lijst van dictionaries, waarbij elke dictionary de naam van het veld en het type (bijv. String) bevat.
 \\Daarna wordt er een Dedupe instance opgezet en wordt deze voorbereidt op een training met de dataset. De dataframe wordt geconverteerd naar een dictionary van lijsten, omdat Dedupe deze indeling verwacht.
 \begin{lstlisting}[language=Python, caption={Opzetten van een Dedupe instance en trainen van deze instance met de data}]
   import dedupe
@@ -196,17 +196,17 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
 \label{sec:analyseResultatenPOC}
 
 \begin{lstlisting}[language=Python, caption={Output dedupe dataframe}]
-     Artikelomschrijving		                     Artikelomschrijving.1 	                      Voorts.gem.prijs	cluster_id	record_id		score
-  1  SPAREKIT TYPE SA91 DN25                     Industriële SPAREKIT klep type SA91	DN25    24,99	            1	          255	         0.50913
-  2  SPAREKIT TYPE SA91 DN50                     Industriële SPAREKIT klep type SA91 DN50	    30,00	            1	          255	         0.50913
-  3  GEREDUC KIT TARTARINI REGEL FL-BP DN80      Tartarini regelkit DN80 FL-BP                589,00	          2	          726	         0.34925
-  4  GEREDUC KIT TARTARINI REGEL FL-BP DN65      Tartarini regelkit DN65 FL-BP                599,00	          2	          726	         0.34259
+     Artikelomschrijving		             Artikelomschrijving.1 	                      Voorts.gem.prijs	cluster_id	record_id		score
+  1  SPAREKIT TYPE SA91 DN25             Industriële SPAREKIT klep type SA91	DN25    24,99	            1	          255	         0.50913
+  2  SPAREKIT TYPE SA91 DN50             Industriële SPAREKIT klep type SA91 DN50	    30,00	            1	          255	         0.50913
+  3  KIT TARTARINI REGEL FL-BP DN80      Tartarini regelkit DN80 FL-BP                589,00	          2	          726	         0.34925
+  4  KIT TARTARINI REGEL FL-BP DN65      Tartarini regelkit DN65 FL-BP                599,00	          2	          726	         0.34259
 \end{lstlisting}
 
 Als output van deze code, volgt een dataset waarin de oorpronkelijke data is uitgebreid met 'cluster-id', 'record-id' en 'score'. De 'cluster-id' bevat een nummer van 0 tot en met 2 die aangeeft tot welke cluster het record behoort. Het 'record-id' geeft het id van het record terug, hierbij hebben alle mogelijkse duplicaten hetzelfde record-id. De 'score' geeft aan hoe groot de kans is dat er een match zich bevindt in de dataset.
-Vanwege GDPR redenen is de effectieve data gemaskeerd  en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat 'Playstadion 5' als duplicaat wordt gezien van 'Playstation 5'. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel 'Samsung Televisie' wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaat detectie systeem een vals positief duplicaat.
+Vanwege GDPR redenen is de effectieve data gemaskeerd  en vervangen door dummy data. In de output van de dedupe dataframe kunnen we zien dat 'Playstadion 5' als duplicaat wordt gezien van 'Playstation 5'. Ze verschillen op vlak van de schrijfwijze, maar ze zijn eigenlijk hetzelfde artikel. Hierdoor wordt er voldaan aan onze eerste requirement, het herkennen van schrijffouten en schrijfwijzen. Het artikel 'Samsung Televisie' wordt ook vermeld als duplicaat, maar als er dieper gekeken wordt naar de artikelomschrijving.1, kunnen we zien dat het hier eigenlijk gaat om twee verschillende televisies. Hierdoor meldt het duplicaatdetectiesysteem een vals positief duplicaat.
 \\Deze proof-of-concept biedt al basis waarmee duplicaten gedetecteerd kunnen worden in een bestaande dataset. Het kan ook op nieuwe data uitgevoerd worden. Daarnaast is het model ook ontworpen zodat het kan blijven leren van andere data en zo het model geoptimaliseerd kan worden. Het verder onderzoeken en testen van nieuwe algoritmen op vlak van clustering en duplicaat detectie kan voor nog betere resultaten zorgen. 
-\\ \\Vooraleer het prototype ontwerpen werd, zijn er verschillende requirements opgesteld waaraan een goed duplicaat detectie systeem moet voldoen.
+\\ \\Vooraleer het prototype ontwerpen werd, zijn er verschillende requirements opgesteld waaraan een goed duplicaatdetectiesysteem moet voldoen.
 \\Ten eerste is het in staat om schrijffouten en variaties in schrijfwijze te detecteren en zo duplicaten te herkennen. Ook pas de standaardisatie toe om duplicaten te kunnen identificeren.
 \\Echter, kan het model nog geen fonetische gelijkenissen herkennen. Dit is een mogelijke verbetering die kan worden toegevoegd aan het model. Dit zou mogelijks kunnen verbeterd worden door ene geschikte Python library toe te voegen die deze functionaliteit ondersteunt. Eveneens kunnen ook andere fuzzy matching algoritmen, die alternatieve methoden gebruiken in plaats van Affine Gap Penalty, geïntegreerd worden.
 \\Speciale tekens en karakters worden momenteel nog niet door het model verwerkt.
