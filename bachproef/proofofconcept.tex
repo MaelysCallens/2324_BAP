@@ -196,11 +196,11 @@ De gedetecteerde duplicaten worden geanalyseerd en de resultaten worden opgeslag
 \label{sec:analyseResultatenPOC}
 
 \begin{lstlisting}[language=Python, caption={Output dedupe dataframe}]
-     Artikelomschrijving		 Artikelomschrijving.1 	                                      Voorts.gem.prijs	cluster_id	record_id		score
-  1  Playstation 5          Playstation 5	                                                499,00	          1	          255	         0.50913
-  2  Playstadion 5          Playstadion 5	                                                499,00	          1	          255	         0.50913
-  3  Samsung Televisie      Samsung UE43CU7190 - 43 inch - 4K LED - 2023                  589,00	          2	          726	         0.34925
-  4  Samsung Televisie      Samsung UE75CU7170UXXN - LED - 75- 4K Ultra HD - Smart TV     599,00	          2	          726	         0.34259
+     Artikelomschrijving		                     Artikelomschrijving.1 	                      Voorts.gem.prijs	cluster_id	record_id		score
+  1  SPAREKIT TYPE SA91 DN25                     Industriële SPAREKIT klep type SA91	DN25    24,99	            1	          255	         0.50913
+  2  SPAREKIT TYPE SA91 DN50                     Industriële SPAREKIT klep type SA91 DN50	    30,00	            1	          255	         0.50913
+  3  GEREDUC KIT TARTARINI REGEL FL-BP DN80      Tartarini regelkit DN80 FL-BP                589,00	          2	          726	         0.34925
+  4  GEREDUC KIT TARTARINI REGEL FL-BP DN65      Tartarini regelkit DN65 FL-BP                599,00	          2	          726	         0.34259
 \end{lstlisting}
 
 Als output van deze code, volgt een dataset waarin de oorpronkelijke data is uitgebreid met 'cluster-id', 'record-id' en 'score'. De 'cluster-id' bevat een nummer van 0 tot en met 2 die aangeeft tot welke cluster het record behoort. Het 'record-id' geeft het id van het record terug, hierbij hebben alle mogelijkse duplicaten hetzelfde record-id. De 'score' geeft aan hoe groot de kans is dat er een match zich bevindt in de dataset.
